@@ -1,0 +1,53 @@
+{% extends 'app/main.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<center><h1 class="display-4">Classroom: {{classroom.name}} - {{user.name}}</h1></center>
+
+<table class="table">
+<thead>
+    <tr>
+      <th><h1 class="display-6"><b>Subjects</b></h1></th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+    <th style="text-align: center;">
+        {% for subject in subjects %}
+            <a style="margin: 5px;" href="#" class="btn btn-primary btn-lg"><h5><b>{{subject}}</b></h5>
+        {% endfor %}
+    </th>
+    </tr>
+</tbody>
+
+</table>
+
+<table class="table">
+<h1 class="display-6"><b>Marks</b></h1>
+<thead>
+    <tr>
+      <th scope="col"><h5>Subject</h5></th>
+      <th scope="col"><h5>Marks</h5><th>
+    </tr>
+</thead>
+<tbody>
+{% for subject in subjects %}
+   <tr>
+      <th scope="row">
+        {{subject}}
+      </th>
+      <td>
+        {% for mark in marks %}
+            {% if subject == mark.subjects  %}
+                {{mark}},
+            {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+{% endfor %}
+
+</table>
+
+
+{% endblock %}

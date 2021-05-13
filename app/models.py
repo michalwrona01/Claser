@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.deletion import SET_NULL
 
 
 
@@ -28,7 +29,11 @@ class Person(models.Model):
 class Mark(models.Model): 
     mark_number = models.IntegerField(null=False)
     mark_name = models.CharField(max_length=30, null=True)
+    subjects = models.ForeignKey(Subject, null=True, on_delete=models.CASCADE)
     students = models.ManyToManyField(Person)
+
+    def __str__(self):
+        return str(self.mark_number)
 
 class Post(models.Model):
     text = models.CharField(max_length=1000, null=False)
@@ -42,6 +47,9 @@ class Homework(models.Model):
     text = models.CharField(max_length=500, null=False)
     subject = models.ForeignKey(Subject, null=False, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, null=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
 
 class Message(models.Model):
     text = models.CharField(max_length=1000, null=False)
