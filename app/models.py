@@ -1,7 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.deletion import SET_NULL
-
 
 
 class Subject(models.Model):
@@ -26,9 +23,21 @@ class Person(models.Model):
     def __str__(self):
         return f'{self.name}, {self.classroom.name}'
 
-class Mark(models.Model): 
-    mark_number = models.IntegerField(null=False)
-    mark_name = models.CharField(max_length=30, null=True)
+class Mark(models.Model):
+    MARK_NUMBER = (
+        (1, '1'),
+        (1.5 , '1+'),
+        (2, '2'),
+        (2.5, '2+'),
+        (3, '3'),
+        (3.5, '3+'),
+        (4, '4'),
+        (4.5, '4+'),
+        (5, '5'),
+        (5.5, '5+'),
+        (6, '6'),
+    )
+    mark_number = models.IntegerField(null=False, choices=MARK_NUMBER)
     subjects = models.ForeignKey(Subject, null=True, on_delete=models.CASCADE)
     students = models.ManyToManyField(Person)
 

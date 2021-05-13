@@ -1,0 +1,22 @@
+{% extends 'app/main.html' %}
+{% load static %}
+{% block content %}
+
+<h1 align="center" class="display-1">Posts</h1>
+<h1 class="display-6">{{subject}}</h1>
+<hr>
+<div class="list-group">
+{% for post in posts %}
+  <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Temat</h5>
+      <small>{{post.date_created}}</small>
+    </div>
+    <p class="mb-1">{{post.text}}</p>
+    <small>{{post.created_person.name}}</small>
+  </a>
+  <br>
+{% endfor %}
+</div>
+
+{% endblock %}

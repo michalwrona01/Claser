@@ -15,7 +15,7 @@
     <tr>
     <th style="text-align: center;">
         {% for subject in subjects %}
-            <a style="margin: 5px;" href="#" class="btn btn-primary btn-lg"><h5><b>{{subject}}</b></h5>
+            <a style="margin: 5px;" href="{% url 'subject_panel' subject.id %}" class="btn btn-primary btn-lg"><h5><b>{{subject}}</b></h5>
         {% endfor %}
     </th>
     </tr>
