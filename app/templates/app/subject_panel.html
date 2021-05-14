@@ -2,6 +2,34 @@
 {% load static %}
 {% block content %}
 
+<h1 align="center" class="display-1">Meeting</h1>
+<h1 class="display-6">Video Chat</h1>
+<hr>
+<div class="row">
+    <div class="col-md-8">.col-md-8</div>
+    <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+
+<h1 align="center" class="display-1">Homeworks</h1>
+<h1 class="display-6">Tasks</h1>
+<hr>
+<div class="accordion" id="accordionExample">
+{% for homework in homeworks%}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      {{homework.task}} 
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      <h5 align="right">Deadline date: {{homework.deadline_date}}</h5>
+      {{homework.text}}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
 <h1 align="center" class="display-1">Posts</h1>
 <h1 class="display-6">{{subject}}</h1>
 <hr>

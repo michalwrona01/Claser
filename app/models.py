@@ -53,12 +53,11 @@ class Post(models.Model):
 
 
 class Homework(models.Model):
-    text = models.CharField(max_length=500, null=False)
+    task = models.CharField(max_length=500, null=False)
+    text = models.CharField(max_length=500, null=True)
     subject = models.ForeignKey(Subject, null=False, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, null=False, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.text
+    deadline_date = models.DateField(null=False)
 
 class Message(models.Model):
     text = models.CharField(max_length=1000, null=False)

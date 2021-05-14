@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
 
@@ -27,11 +27,18 @@ def subject_panel(request, pk):
     classroom = Person.objects.get(id=1).classroom
     subject = Subject.objects.get(id=pk)
     posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
+    homeworks = Homework.objects.filter(subject=subject)
 
     context = {'posts' : posts,
                 'subject' : subject,
                 'classroom' : classroom,
+                'homeworks' : homeworks,
                 }
 
 
     return render(request, 'app/subject_panel.html', context)
+
+def dashboard(request):
+    context = {}
+    
+    return render(request, 'app/dashboard.html', context)
