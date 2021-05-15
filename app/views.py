@@ -39,6 +39,22 @@ def subject_panel(request, pk):
     return render(request, 'app/subject_panel.html', context)
 
 def dashboard(request):
-    context = {}
+    classroom = Person.objects.get(id=1).classroom
+    context = {
+        'classroom' : classroom,
+    }
     
+    
+    return render(request, 'app/choice_classroom.html', context)
+
+def classroom_panel(request, pk):
+    classroom = Classroom.objects.get(id=pk)
+    students = Person.objects.filter(classroom=classroom)
+
+    context = {
+        'classroom' : classroom,
+        'students' : students,
+    }
+
     return render(request, 'app/dashboard.html', context)
+    
