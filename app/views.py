@@ -2,19 +2,20 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 
+@login_required(login_url='login')
 def home(request):
-    person = Person.objects.get(id=1)
-    classroom = person.classroom
+    student = Student.objects.get(id=1)
+    classroom = student.classroom
     subjects = Subject.objects.filter(classroom__name=classroom.name)
-    marks = Mark.objects.filter(students__name=person.name)
-
+    marks = Mark.objects.filter(students__id=student.id)
 
 
     context = {
-                'user' : person,
+                'student' : student,
                 'subjects' : subjects,
                 'classroom' : classroom,
                 'marks' : marks,
@@ -23,8 +24,10 @@ def home(request):
 
     return render(request, 'app/home.html', context)
 
+
+@login_required(login_url='login')
 def subject_panel(request, pk):
-    classroom = Person.objects.get(id=1).classroom
+    classroom = Student.objects.get(id=1).classroom
     subject = Subject.objects.get(id=pk)
     posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
     homeworks = Homework.objects.filter(subject=subject)
@@ -38,8 +41,10 @@ def subject_panel(request, pk):
 
     return render(request, 'app/subject_panel.html', context)
 
+
+@login_required(login_url='login')
 def dashboard(request):
-    classroom = Person.objects.get(id=1).classroom
+    classroom = Student.objects.get(id=1).classroom
     context = {
         'classroom' : classroom,
     }
@@ -47,9 +52,11 @@ def dashboard(request):
     
     return render(request, 'app/choice_classroom.html', context)
 
+
+@login_required(login_url='login')
 def classroom_panel(request, pk):
     classroom = Classroom.objects.get(id=pk)
-    students = Person.objects.filter(classroom=classroom)
+    students = Student.objects.filter(classroom=classroom)
 
     context = {
         'classroom' : classroom,

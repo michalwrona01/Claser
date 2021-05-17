@@ -1,0 +1,24 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<br></br><br></br>
+<div class="center_container">
+    <h1 align="center" class="display-1">Who are you?</h1>
+    <hr>
+    {{form.as_p}}
+    <div align="center" class="buttons-profiles">
+        <div class="row">
+            <div class="col-sm">
+                <a class="btn btn-lg btn-primary"><h1 align="center" class="display-1">Student</h1></a>
+            </div>
+            <div class="col-sm">
+                <a href="#" class="btn btn-lg btn-primary"><h1 align="center" class="display-1">Teacher</h1></a>
+            </div>
+            <div class="col-sm">
+                <a class="btn btn-lg btn-primary"><h1 align="center" class="display-1">Director</h1></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

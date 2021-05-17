@@ -3,7 +3,7 @@
 
 {% block content %}
 <br>
-<center><h1 class="display-4">Classroom: {{classroom.name}} - {{user.name}}</h1></center>
+<center><h1 class="display-4">Classroom: {{classroom.name}} - {{student.user.first_name}} {{student.user.last_name}}</h1></center>
 
 <table class="table">
 <thead>
@@ -39,7 +39,7 @@
       </th>
       <td>
         {% for mark in marks %}
-            {% if subject == mark.subjects  %}
+            {% if subject == mark.subject  %}
                 {{mark}},
             {% endif %}
         {% endfor %}
