@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from django.shortcuts import redirect, render
 from .forms import UserRegisterForm, StudentCreationForm, TeacherCreationForm, DirectorCreationForm
 from django.contrib import messages
@@ -5,9 +6,11 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from .backends import EmailBackend, is_user_has_profile
 from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_required, without_profile_required
 
 
 @login_required(login_url='login')
+@without_profile_required
 def create_profile_director(request):
     form = DirectorCreationForm(initial={'user': request.user})
         
@@ -15,6 +18,9 @@ def create_profile_director(request):
         form = DirectorCreationForm(request.POST, initial={'user': request.user})
         if form.is_valid():
             form.save()
+
+            group = Group.objects.get(name='director')
+            request.user.groups.add(group)
                 
             return redirect('home')
 
@@ -24,6 +30,7 @@ def create_profile_director(request):
 
 
 @login_required(login_url='login')
+@without_profile_required
 def create_profile_teacher(request):
     form = TeacherCreationForm(initial={'user': request.user})
         
@@ -31,6 +38,9 @@ def create_profile_teacher(request):
         form = TeacherCreationForm(request.POST, initial={'user': request.user})
         if form.is_valid():
             form.save()
+
+            group = Group.objects.get(name='teacher')
+            request.user.groups.add(group)
                 
             return redirect('home')
 
@@ -40,6 +50,7 @@ def create_profile_teacher(request):
 
 
 @login_required(login_url='login')
+@without_profile_required
 def create_profile_student(request):
     form = StudentCreationForm(initial={'user': request.user})
         
@@ -47,6 +58,9 @@ def create_profile_student(request):
         form = StudentCreationForm(request.POST, initial={'user': request.user})
         if form.is_valid():
             form.save()
+
+            group = Group.objects.get(name='student')
+            request.user.groups.add(group)
                 
             return redirect('home')
 
@@ -54,7 +68,7 @@ def create_profile_student(request):
     context = {'form' : form}
     return render(request, 'authentication/creation_profile_student.html', context)
 
-
+@unauthenticated_required
 def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
@@ -76,7 +90,7 @@ def login(request):
     return render(request, 'authentication/login.html', {})
 
 
-
+@unauthenticated_required
 def register(request):
     form = UserRegisterForm()
 

@@ -3,12 +3,15 @@ from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from .decorators import allowed_user, redirect_to_home_page_due_to_role
 
 
 
 @login_required(login_url='login')
+@redirect_to_home_page_due_to_role
+@allowed_user(allowed_roles=['student'])
 def home(request):
-    student = Student.objects.get(id=1)
+    student = Student.objects.get(user=request.user)
     classroom = student.classroom
     subjects = Subject.objects.filter(classroom__name=classroom.name)
     marks = Mark.objects.filter(students__id=student.id)
@@ -26,8 +29,9 @@ def home(request):
 
 
 @login_required(login_url='login')
+@allowed_user(allowed_roles=['student'])
 def subject_panel(request, pk):
-    classroom = Student.objects.get(id=1).classroom
+    classroom = Student.objects.get(user=request.user).classroom
     subject = Subject.objects.get(id=pk)
     posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
     homeworks = Homework.objects.filter(subject=subject)
@@ -43,10 +47,11 @@ def subject_panel(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
 def dashboard(request):
-    classroom = Student.objects.get(id=1).classroom
+    classrooms = request.user.teacher.classrooms.all()
     context = {
-        'classroom' : classroom,
+        'classrooms' : classrooms,
     }
     
     
@@ -54,6 +59,7 @@ def dashboard(request):
 
 
 @login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
 def classroom_panel(request, pk):
     classroom = Classroom.objects.get(id=pk)
     students = Student.objects.filter(classroom=classroom)

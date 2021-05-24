@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.http import request
 
 class Subject(models.Model):
     name = models.CharField(max_length=30, null=False)
@@ -22,7 +23,7 @@ class Student(models.Model):
     phone_number = models.IntegerField(null=True)
     personal_identity_number = models.IntegerField(null=True)
     address = models.CharField(max_length=255, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student')
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name} - {self.classroom}'
@@ -48,6 +49,7 @@ class Mark(models.Model):
         (6, '6'),
     )
     mark_number = models.FloatField(null=False, choices=MARK_NUMBER)
+    description = models.CharField(max_length=100, null=True)
     subject = models.ForeignKey(Subject, null=True, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
 
@@ -75,7 +77,24 @@ class Message(models.Model):
 
 class Teacher(models.Model):
     is_teacher = models.BooleanField(default=True)
-    classroom = models.ManyToManyField(Classroom)
+    classrooms = models.ManyToManyField(Classroom)
     subjects = models.ManyToManyField(Subject)
+    phone_number = models.IntegerField(null=True)
+    personal_identity_number = models.IntegerField(null=True)
+    address = models.CharField(max_length=255, null=True)
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher')
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+
+class Director(models.Model):
+    is_director = models.BooleanField(default=True)
+    phone_number = models.IntegerField(null=True)
+    personal_identity_number = models.IntegerField(null=True)
+    address = models.CharField(max_length=255, null=True)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='director')
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
