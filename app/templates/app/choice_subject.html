@@ -1,0 +1,11 @@
+{% extends 'app/main.html' %}
+{% block content %}
+
+<br>
+<h1 class="display-6">Choice subject</h1>
+<hr>
+{% for subject in subjects %}
+    <a style="display: block; float: center;" href="{% url 'dashboard' classroom.id subject.id %}" class="btn btn-lg btn-primary"><h1>{{subject.name}}</h1></a><br>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'app/dashboard.html' %}
+{% block main %}
+    <div class="list-group">
+    {% for post in posts %}
+    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{post.topic}}</h5>
+            <small>{{post.date_created}}</small>
+        </div>
+        <p class="mb-1">{{post.text}}</p><small>{{post.created_person.first_name}} {{post.created_person.last_name}}</small>
+    </a>
+    <br>
+    {% endfor %}
+    </div>
+    <form method="POST" action="">
+    {% csrf_token %}
+        {{form}}
+        <br>
+        <button class="btn btn-primary btn-lg" type="submit">Add post</button>
+    </form>
+{% endblock %}

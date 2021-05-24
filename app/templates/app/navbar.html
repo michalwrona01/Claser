@@ -12,10 +12,10 @@
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
         {% endif %}
-        
+
         {% if request.user.teacher.is_teacher %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link" href="{% url 'choice_classroom' %}">Dashboard</a>
           </li>
         {% endif %}
         <li class="nav-item">
@@ -26,6 +26,7 @@
         </li>
       </ul>     
     </div> 
+    <h5 style="color: white;">{{request.user.first_name}} {{request.user.last_name}}</h5>
   </div>
     <span><a style="margin-right: 20px;" class="btn btn-primary" href="{% url 'logout' %}">Logout</a></span>
 </nav>

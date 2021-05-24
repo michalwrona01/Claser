@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .decorators import allowed_user, redirect_to_home_page_due_to_role
+from .forms import PostAddForm
 
 
 
@@ -31,10 +32,11 @@ def home(request):
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['student'])
 def subject_panel(request, pk):
-    classroom = Student.objects.get(user=request.user).classroom
-    subject = Subject.objects.get(id=pk)
+    classroom = request.user.student.classroom
+    subject = classroom.subjects.filter(id=pk).first()
     posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
     homeworks = Homework.objects.filter(subject=subject)
+
 
     context = {'posts' : posts,
                 'subject' : subject,
@@ -48,7 +50,7 @@ def subject_panel(request, pk):
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['teacher'])
-def dashboard(request):
+def choice_classroom(request):
     classrooms = request.user.teacher.classrooms.all()
     context = {
         'classrooms' : classrooms,
@@ -57,17 +59,68 @@ def dashboard(request):
     
     return render(request, 'app/choice_classroom.html', context)
 
-
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['teacher'])
-def classroom_panel(request, pk):
-    classroom = Classroom.objects.get(id=pk)
-    students = Student.objects.filter(classroom=classroom)
+def choice_subject(request, classroom_pk):
+    classroom = Classroom.objects.get(id=classroom_pk)
+    teacher_subjects = set(request.user.teacher.subjects.all())
+    classroom_subjects = set(classroom.subjects.all())
+    subjects = teacher_subjects & classroom_subjects
+
+
 
     context = {
         'classroom' : classroom,
-        'students' : students,
+        'subjects' : subjects
+    }
+    
+    
+    return render(request, 'app/choice_subject.html', context)
+
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
+def dashboard(request, classroom_pk, subject_pk):
+    active_list_for_boostrap = ['', '', '', '', '', '']
+    classroom = Classroom.objects.get(id=classroom_pk)
+    subject = Subject.objects.get(id=subject_pk)
+
+    context = {
+        'active_list' : active_list_for_boostrap,
+        'classroom' : classroom,
+        'subject' : subject,
     }
 
     return render(request, 'app/dashboard.html', context)
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
+def dashboard_posts(request, classroom_pk, subject_pk):
+    active_list_for_boostrap = ['', 'active', '', '', '', '']
+    classroom = Classroom.objects.get(id=classroom_pk)
+    subject = Subject.objects.get(id=subject_pk)
+    posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
+
+    form = PostAddForm(initial={
+            'classroom' : classroom,
+            'subject' : subject,
+            'created_person' : request.user})
+
+    if request.method == "POST":
+        form = PostAddForm(request.POST, initial={
+            'classroom' : classroom,
+            'subject' : subject,
+            'created_person' : request.user})
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'active_list' : active_list_for_boostrap,
+        'classroom' : classroom,
+        'subject' : subject,
+        'posts' : posts,
+        'form' : form
+    }
+
+    return render(request, 'app/posts_dashboard.html', context)
     

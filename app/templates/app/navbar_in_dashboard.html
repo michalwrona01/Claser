@@ -1,19 +1,25 @@
-<h1 align="center" class="display-4">Classroom - <b>{{classroom.name}}</b></h1>
+<h1 align="center" class="display-4">Classroom - {{classroom.name}} <b>{{subject.name.upper}}</b></h1>
 <hr>
 
 <br>
 <ul class="nav nav-pills nav-fill">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">VideoChat</a>
+    <a class="nav-link {{ active_list.0 }}" aria-current="page" href="#">VideoChat</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Marks</a>
+    <a class="nav-link {{ active_list.1 }}" href="{% url 'dashboard_posts' classroom.id subject.id %}">Posts</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Lesson Plan</a>
+    <a class="nav-link {{ active_list.2 }}" href="#">Homeworks</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Messages</a>
+    <a class="nav-link {{ active_list.3 }}" href="#">Marks</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{ active_list.4 }}" href="#">Lesson Plan</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{ active_list.5 }}" href="#">Messages</a>
   </li>
 </ul>
 <hr>

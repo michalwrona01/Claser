@@ -6,6 +6,6 @@
 <h1 class="display-6">Choice classroom</h1>
 <hr>
 {% for classroom in classrooms %}
-    <a style="display: block; float: center;" href="{% url 'classroom_panel' classroom.id %}" class="btn btn-lg btn-primary"><h1>{{classroom.name}}</h1></a>
+    <a style="display: block; float: center;" href="{% url 'choice_subject' classroom.id %}" class="btn btn-lg btn-primary"><h1>{{classroom.name}}</h1></a><br>
 {% endfor %}
 {% endblock %}

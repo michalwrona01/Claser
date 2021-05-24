@@ -27,8 +27,8 @@ def redirect_to_home_page_due_to_role(view_func):
             return view_func(request, *args, **kwargs)
 
         elif request.user.groups.first().name == 'teacher':
-            return redirect('dashboard')
+            return redirect('choice_classroom')
 
         elif request.user.groups.first().name == 'director':
-            return redirect('dashboard')
+            return redirect('choice_classroom')
     return wrapper

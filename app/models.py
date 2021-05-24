@@ -57,6 +57,7 @@ class Mark(models.Model):
         return str(self.mark_number)
 
 class Post(models.Model):
+    topic = models.CharField(max_length=100, null=True)
     text = models.CharField(max_length=1000, null=False)
     date_created = models.DateField(auto_now_add=True)
     classroom = models.ForeignKey(Classroom, null=True, on_delete=models.CASCADE)
