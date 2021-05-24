@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<h1 align="center" class="display-1">Enter data</h1>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">{{form.classroom.label}}</label>
+        {{form.classroom}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{form.phone_number.label}}</label>
+        {{form.phone_number}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{form.personal_identity_number.label}}</label>
+        {{form.personal_identity_number}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{form.address.label}}</label>
+        {{form.address}}
+    </div>
+        {{form.user}}
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+    </div>
+</form>
+
+
+{% endblock %}

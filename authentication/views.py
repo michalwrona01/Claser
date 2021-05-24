@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .forms import UserRegisterForm, StudentCreationForm
+from .forms import UserRegisterForm, StudentCreationForm, TeacherCreationForm, DirectorCreationForm
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -7,13 +7,53 @@ from .backends import EmailBackend, is_user_has_profile
 from django.contrib.auth.decorators import login_required
 
 
-def choice_user_profile(request):
-    form = StudentCreationForm()
-    context = {
-        'form' : form,
-    }
+@login_required(login_url='login')
+def create_profile_director(request):
+    form = DirectorCreationForm(initial={'user': request.user})
+        
+    if request.method == "POST":
+        form = DirectorCreationForm(request.POST, initial={'user': request.user})
+        if form.is_valid():
+            form.save()
+                
+            return redirect('home')
 
-    return render(request, 'authentication/choice_user_profile.html', context)
+
+    context = {'form' : form}
+    return render(request, 'authentication/creation_profile_director.html', context)
+
+
+@login_required(login_url='login')
+def create_profile_teacher(request):
+    form = TeacherCreationForm(initial={'user': request.user})
+        
+    if request.method == "POST":
+        form = TeacherCreationForm(request.POST, initial={'user': request.user})
+        if form.is_valid():
+            form.save()
+                
+            return redirect('home')
+
+
+    context = {'form' : form}
+    return render(request, 'authentication/creation_profile_teacher.html', context)
+
+
+@login_required(login_url='login')
+def create_profile_student(request):
+    form = StudentCreationForm(initial={'user': request.user})
+        
+    if request.method == "POST":
+        form = StudentCreationForm(request.POST, initial={'user': request.user})
+        if form.is_valid():
+            form.save()
+                
+            return redirect('home')
+
+
+    context = {'form' : form}
+    return render(request, 'authentication/creation_profile_student.html', context)
+
 
 def login(request):
     if request.method == "POST":
@@ -28,7 +68,7 @@ def login(request):
             if is_user_has_profile(user):
                 return redirect('home')
             else:
-                return redirect('choice_user_profile')
+                return render(request, 'authentication/choice_user_profile.html', {})
         else:
             messages.error(request, 'You entered the wrong e-mail or password.')
             
