@@ -3,12 +3,13 @@ from django.http import HttpResponse, JsonResponse
 from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .decorators import allowed_user, redirect_to_home_page_due_to_role
+from .decorators import allowed_user, redirect_to_home_page_due_to_role, redirect_to_choice_profile
 from .forms import PostAddForm
 
 
 
 @login_required(login_url='login')
+@redirect_to_choice_profile
 @redirect_to_home_page_due_to_role
 @allowed_user(allowed_roles=['student'])
 def home(request):

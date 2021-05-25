@@ -32,3 +32,14 @@ def redirect_to_home_page_due_to_role(view_func):
         elif request.user.groups.first().name == 'director':
             return redirect('choice_classroom')
     return wrapper
+
+def redirect_to_choice_profile(view_func):
+    def wrapper(request, *args, **kwargs):
+        try:
+            request.user.groups.first().name
+        except Exception:
+            return render(request, 'authentication/choice_user_profile.html', {})
+        else:
+            return view_func(request, *args, **kwargs)
+
+    return wrapper
