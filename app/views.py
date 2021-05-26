@@ -37,14 +37,16 @@ def subject_panel(request, pk):
     subject = classroom.subjects.filter(id=pk).first()
     posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
     homeworks = Homework.objects.filter(subject=subject)
-    
-    form_post = PostCreationForm()
 
-    if request.method == "POST":
-        form_post = PostCreationForm(request.POST, initial={
+    initial_values = initial={
             'classroom' : classroom,
             'subject' : subject,
-            'created_person' : request.user})
+            'created_person' : request.user}
+    
+    form_post = PostCreationForm(initial=initial_values)
+
+    if request.method == "POST":
+        form_post = PostCreationForm(request.POST, initial=initial_values)
         if form_post.is_valid():
             form_post.save()
 
@@ -70,6 +72,7 @@ def choice_classroom(request):
     
     
     return render(request, 'app/choice_classroom.html', context)
+
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['teacher'])
@@ -169,6 +172,35 @@ def dashboard_homeworks (request, classroom_pk, subject_pk):
     }
 
     return render(request, 'app/homeworks_dashboard.html', context)
+
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
+def dashboard_marks(request, classroom_pk, subject_pk):
+    active_list_for_boostrap = ['', '', '', 'active', '', '']
+    classroom = Classroom.objects.get(id=classroom_pk)
+    subject = Subject.objects.get(id=subject_pk)
+    students = Student.objects.filter(classroom=classroom)
+
+    students_and_marks = []
+    
+    for student in students:
+        marks = Mark.objects.filter(students__id=student.id).all()
+        students_and_marks.append({student : marks})
+
+
+    context = {
+        'active_list' : active_list_for_boostrap,
+        'classroom' : classroom,
+        'subject' : subject,
+        'students' : students,
+        'students_and_marks' : students_and_marks,
+    }
+                
+
+    return render(request, 'app/marks_dashboard.html', context)
+
+    
 
 
 

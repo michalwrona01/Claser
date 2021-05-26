@@ -53,6 +53,9 @@ class Mark(models.Model):
     description = models.CharField(max_length=100, null=True)
     subject = models.ForeignKey(Subject, null=True, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
+    date_created = models.DateField(auto_now_add=True)
+    classroom = models.ForeignKey(Classroom, null=True, on_delete=models.CASCADE)
+    created_person = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.mark_number)

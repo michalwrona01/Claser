@@ -1,0 +1,41 @@
+{% extends 'app/dashboard.html' %}
+{% block main %}
+
+<div class="row">
+    <div class="col-4">
+        <table class="table caption-top">
+            <caption><h3>Marks</h3></caption>
+            <thead>
+                <tr>
+                <th scope="col">Student</th>
+                <th scope="col">Marks</th>
+                <th scope="col">Check</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in students_and_marks %}
+                    {% for student in item.keys %}
+                        <tr>
+                        <th scope="row">{{student.user.get_full_name}}</th>
+                        <td>
+                            {% for marks in item.values %}
+                                {% for mark in marks %}
+                                    {{mark}},
+                                {% endfor %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{student.id}}" id="flexCheckDefault">
+                            </div>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-8">col-8</div>
+  </div>
+
+{% endblock %}

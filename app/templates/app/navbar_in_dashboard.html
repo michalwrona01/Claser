@@ -13,7 +13,7 @@
     <a class="nav-link {{ active_list.2 }}" href="{% url 'dashboard_homeworks' classroom.id subject.id %}">Homeworks</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ active_list.3 }}" href="#">Marks</a>
+    <a class="nav-link {{ active_list.3 }}" href="{% url 'dashboard_marks' classroom.id subject.id %}">Marks</a>
   </li>
   <li class="nav-item">
     <a class="nav-link {{ active_list.4 }}" href="#">Lesson Plan</a>
