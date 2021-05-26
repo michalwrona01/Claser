@@ -21,6 +21,7 @@ def allowed_user(allowed_roles=[]):
         return wrapper_func
     return decorator
 
+
 def redirect_to_home_page_due_to_role(view_func):
     def wrapper(request, *args, **kwargs):
         if request.user.groups.first().name == 'student':
@@ -32,6 +33,7 @@ def redirect_to_home_page_due_to_role(view_func):
         elif request.user.groups.first().name == 'director':
             return redirect('choice_classroom')
     return wrapper
+
 
 def redirect_to_choice_profile(view_func):
     def wrapper(request, *args, **kwargs):

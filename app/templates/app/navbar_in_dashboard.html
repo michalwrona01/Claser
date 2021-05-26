@@ -10,7 +10,7 @@
     <a class="nav-link {{ active_list.1 }}" href="{% url 'dashboard_posts' classroom.id subject.id %}">Posts</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{ active_list.2 }}" href="#">Homeworks</a>
+    <a class="nav-link {{ active_list.2 }}" href="{% url 'dashboard_homeworks' classroom.id subject.id %}">Homeworks</a>
   </li>
   <li class="nav-item">
     <a class="nav-link {{ active_list.3 }}" href="#">Marks</a>

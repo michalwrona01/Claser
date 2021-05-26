@@ -29,6 +29,7 @@ class Student(models.Model):
         return f'{self.user.first_name} {self.user.last_name} - {self.classroom}'
 
 
+
 class Mark(models.Model):
     MARK_NUMBER = (
         (1, '1'),
@@ -71,6 +72,9 @@ class Homework(models.Model):
     subject = models.ForeignKey(Subject, null=False, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, null=False, on_delete=models.CASCADE)
     deadline_date = models.DateField(null=False)
+    created_person = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    date_created = models.DateField(auto_now_add=True)
+
 
 class Message(models.Model):
     text = models.CharField(max_length=1000, null=False)
@@ -88,6 +92,8 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
+
+
 
 class Director(models.Model):
     is_director = models.BooleanField(default=True)
