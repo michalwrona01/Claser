@@ -1,3 +1,7 @@
 from django.contrib import admin
+from django.contrib.admin.sites import DefaultAdminSite
+from .models import *
 
-# Register your models here.
+admin.site.register(LessonPlan)
+admin.site.register(Day)
+admin.site.register(Lesson)
