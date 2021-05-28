@@ -2,14 +2,13 @@
 {% block main %}
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-8">
         <table class="table caption-top">
             <caption><h3>Marks</h3></caption>
             <thead>
                 <tr>
                 <th scope="col">Student</th>
                 <th scope="col">Marks</th>
-                <th scope="col">Check</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,18 +23,42 @@
                                 {% endfor %}
                             {% endfor %}
                         </td>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{student.id}}" id="flexCheckDefault">
-                            </div>
-                        </td>
                         </tr>
                     {% endfor %}
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <div class="col-8">col-8</div>
-  </div>
+    <div class="col-4">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <table class="table caption-top">
+                <caption><h3>Panel Adding Marks</h3>
+                    {{forms.mark_number.label}}{{forms.mark_number}}
+                    <hr>
+                    {{forms.description.label}}{{forms.description}}
+                </caption>  
+                <thead>
+                    <tr>
+                    <th scope="col">Student</th>
+                    <th scope="col">Check</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form_student in forms.students %}
+                        <tr>
+                            <th scope="row">{{form_student}}</th>
+                        <td>
+                    {% endfor %}
+                </tbody>
+            </table>
+                {{forms.classroom}}
+                {{forms.subject}}
+                {{forms.created_person}}
+                {{forms.date_created}}
 
+            <button typ="submit" class="btn btn-primary">Add Marks</button>
+        </form>
+    </div>
+  </div>
 {% endblock %}

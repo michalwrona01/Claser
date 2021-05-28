@@ -4,7 +4,7 @@ from .models import *
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .decorators import allowed_user, redirect_to_home_page_due_to_role, redirect_to_choice_profile
-from .forms import PostCreationForm, HomeworkCreationForm
+from .forms import MarkAddForm, PostCreationForm, HomeworkCreationForm, MarkAddForm
 
 
 
@@ -38,7 +38,7 @@ def subject_panel(request, pk):
     posts = Post.objects.filter(classroom=classroom).filter(subject=subject)
     homeworks = Homework.objects.filter(subject=subject)
 
-    initial_values = initial={
+    initial_values = {
             'classroom' : classroom,
             'subject' : subject,
             'created_person' : request.user}
@@ -127,7 +127,6 @@ def dashboard_posts(request, classroom_pk, subject_pk):
             'classroom' : classroom,
             'subject' : subject,
             'created_person' : request.user})
-
         if form.is_valid():
             form.save()
 
@@ -144,7 +143,7 @@ def dashboard_posts(request, classroom_pk, subject_pk):
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['teacher'])
-def dashboard_homeworks (request, classroom_pk, subject_pk):
+def dashboard_homeworks(request, classroom_pk, subject_pk):
     active_list_for_boostrap = ['', '', 'active', '', '', '']
     classroom = Classroom.objects.get(id=classroom_pk)
     subject = Subject.objects.get(id=subject_pk)
@@ -159,7 +158,6 @@ def dashboard_homeworks (request, classroom_pk, subject_pk):
 
     if request.method == "POST":
         form = HomeworkCreationForm(request.POST, initial=inital_values_form)
-
         if form.is_valid():
             form.save()
 
@@ -183,10 +181,24 @@ def dashboard_marks(request, classroom_pk, subject_pk):
     students = Student.objects.filter(classroom=classroom)
 
     students_and_marks = []
-    
     for student in students:
         marks = Mark.objects.filter(students__id=student.id).all()
         students_and_marks.append({student : marks})
+
+    inital_values_form = {
+            'classroom' : classroom,
+            'subject' : subject,
+            'created_person' : request.user
+            }
+       
+    form = MarkAddForm(classroom_pk, inital_values_form) 
+
+    if request.method == "POST":
+        form = MarkAddForm(classroom_pk, request.POST, inital_values_form)
+        print(form.as_p())
+
+        if form.is_valid():
+            form.save()
 
 
     context = {
@@ -195,6 +207,7 @@ def dashboard_marks(request, classroom_pk, subject_pk):
         'subject' : subject,
         'students' : students,
         'students_and_marks' : students_and_marks,
+        'forms' : form,
     }
                 
 
