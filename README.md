@@ -72,7 +72,8 @@ Enter your browser on this link: [127.0.0.1:8000](http://127.0.0.1:8000/)
 
 # Project status
 The project is in progress development, all changes and development can be seen in the project demo.
-[wronamichal-claser.herokuapp.com](https://wronamichal-claser.herokuapp.com/)
+
+[DEMO LIVE](https://wronamichal-claser.herokuapp.com/)
 
 # Inspiration
 The current situation in the world was the inspiration for creating this application.
