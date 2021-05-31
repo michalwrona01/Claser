@@ -1,3 +1,4 @@
+from dashboard.models import *
 from django.shortcuts import render
 from app.models import *
 from app.decorators import allowed_user
@@ -123,7 +124,7 @@ def dashboard_marks(request, classroom_pk, subject_pk):
 
     students_and_marks = []
     for student in students:
-        marks = Mark.objects.filter(students__id=student.id).all()
+        marks = Mark.objects.filter(subject_id=subject_pk).filter(students__id=student.id).all()
         students_and_marks.append({student : marks})
 
     inital_values_form = {
