@@ -4,6 +4,7 @@ from app.models import *
 from app.decorators import allowed_user
 from django.contrib.auth.decorators import login_required
 from .forms import PostCreationForm, HomeworkCreationForm, MarkAddForm
+import numpy as np
 
 
 @login_required(login_url='login')
@@ -152,3 +153,46 @@ def dashboard_marks(request, classroom_pk, subject_pk):
                 
 
     return render(request, 'dashboard/marks_dashboard.html', context)
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
+def dashboard_lesson_plan(request, classroom_pk, subject_pk):
+    active_list_for_boostrap = ['', '', '', '', 'active', '']
+    classroom = Classroom.objects.get(id=classroom_pk)
+    subject = Subject.objects.get(id=subject_pk)
+    students = Student.objects.filter(classroom=classroom)
+
+    try:
+        is_error = False
+        lesson_plan = LessonPlan.objects.get(classroom=classroom)
+        days_in_lesson_plan = Day.objects.filter(lesson_plan=lesson_plan).all()
+
+        lessons = np.array([[lessons 
+                    for lessons in Lesson.objects.filter(day=days_in_lesson_plan[i]).all()] 
+                    for i in range(len(days_in_lesson_plan))]).transpose()
+              
+        lessons_index = [lessons[i][0] for i in range(8)]
+
+        zipped = zip(lessons_index, lessons)
+
+        context = {
+            'active_list' : active_list_for_boostrap,
+            'classroom' : classroom,
+            'subject' : subject,
+            'students' : students,
+            'lessons' : lessons,
+            'zipped' : zipped,
+            'is_error' : is_error
+        }
+   
+    except Exception:
+        is_error = True
+        context = {
+            'active_list' : active_list_for_boostrap,
+            'classroom' : classroom,
+            'subject' : subject,
+            'students' : students,
+        }
+    finally:
+        return render(request, 'dashboard/lesson_plan_dashboard.html', context)
+
