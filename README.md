@@ -25,10 +25,15 @@ The aim of the project is to create a friendly and usable design.
 ## On your PC
 ```bash
 virtualenv env
+```
+```bash
 source env/Scripts/activate
+```
+```bash
 pip install requirements.txt
+```
+```bash
 python manage.py runserver
-
 ```
 Enter your browser on this link: [127.0.0.1:8000](http://127.0.0.1:8000/)
 
