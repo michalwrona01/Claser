@@ -4,6 +4,7 @@ from app.models import *
 from app.decorators import allowed_user
 from django.contrib.auth.decorators import login_required
 from .forms import PostCreationForm, HomeworkCreationForm, MarkAddForm
+import numpy as np
 
 
 @login_required(login_url='login')
