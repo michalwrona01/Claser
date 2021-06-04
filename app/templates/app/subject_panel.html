@@ -32,6 +32,19 @@
     </div>
 
 <h1 align="center" class="display-1">Posts</h1>
+{% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+{% endfor %}
 <h1 class="display-6">{{subject}}</h1>
 <hr>
 <div class="list-group">
@@ -45,6 +58,7 @@
     <small>{{post.created_person.name}}</small>
   </a>
   <br>
+  <a class="btn btn-danger btn-sm" href="{% url 'subject_panel_post_delete' subject.id post.id %}">DELETE</a>
 {% endfor %}
 
 <form method="POST" action="">
