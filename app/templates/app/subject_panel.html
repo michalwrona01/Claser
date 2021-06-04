@@ -57,8 +57,7 @@
     <p class="mb-1">{{post.text}}</p>
     <small>{{post.created_person.name}}</small>
   </a>
-  <br>
-  <a class="btn btn-danger btn-sm" href="{% url 'subject_panel_post_delete' subject.id post.id %}">DELETE</a>
+  <a style="margin-bottom: 10px;" class="btn btn-danger btn-sm" href="{% url 'subject_panel_post_delete' subject.id post.id %}">DELETE</a>
 {% endfor %}
 
 <form method="POST" action="">
