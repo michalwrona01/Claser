@@ -133,6 +133,20 @@ def dashboard_homeworks(request, classroom_pk, subject_pk):
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['teacher'])
+def dashboard_homework_delete(request, classroom_pk, subject_pk, homework_pk):
+    try:
+        homework_obj = Homework.objects.get(id=homework_pk)
+    except ObjectDoesNotExist:
+        messages.error(request, "You doesn't have any homeworks or or want to delete an existing post!")
+    else:
+        homework_obj.delete()
+        messages.success(request, "You just delete homework!")
+    finally:
+        return redirect('dashboard_homeworks', classroom_pk, subject_pk)
+
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
 def dashboard_marks(request, classroom_pk, subject_pk):
     active_list_for_boostrap = ['', '', '', 'active', '', '']
     classroom = Classroom.objects.get(id=classroom_pk)

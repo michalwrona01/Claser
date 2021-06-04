@@ -1,5 +1,19 @@
 {% extends 'dashboard/dashboard.html' %}
 {% block main %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
+
     <div class="accordion accordion-flush" id="accordionFlushExample">
         {% for homework in homeworks %}
             <div class="accordion-item">
@@ -16,6 +30,7 @@
                     </div>
                 </div>
             </div>
+            <a style="margin-top: 5px; margin-bottom: 5px;" class="btn btn-danger" href="{% url 'dashboard_homework_delete' classroom.id subject.id homework.id %}">DELETE</a>
         {% endfor %}
     </div>
     <br>
