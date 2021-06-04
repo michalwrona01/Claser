@@ -1,10 +1,12 @@
 from dashboard.models import *
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from app.models import *
 from app.decorators import allowed_user
 from django.contrib.auth.decorators import login_required
 from .forms import PostCreationForm, HomeworkCreationForm, MarkAddForm
 import numpy as np
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 
 @login_required(login_url='login')
@@ -82,6 +84,20 @@ def dashboard_posts(request, classroom_pk, subject_pk):
     }
 
     return render(request, 'dashboard/posts_dashboard.html', context)
+
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['teacher'])
+def dashboard_post_delete(request, classroom_pk, subject_pk, post_pk):
+    try:
+        post_obj = Post.objects.get(id=post_pk)
+    except ObjectDoesNotExist:
+        messages.error(request, "You doesn't have any posts or or want to delete an existing post!")
+    else:
+        post_obj.delete()
+        messages.success(request, "You just delete post!")
+    finally:
+        return redirect('dashboard_posts', classroom_pk, subject_pk)
 
 
 @login_required(login_url='login')

@@ -1,5 +1,18 @@
 {% extends 'dashboard/dashboard.html' %}
 {% block main %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
     <div class="list-group">
     {% for post in posts %}
     <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
@@ -7,9 +20,10 @@
             <h5 class="mb-1">{{post.topic}}</h5>
             <small>{{post.date_created}}</small>
         </div>
-        <p class="mb-1">{{post.text}}</p><small>{{post.created_person.first_name}} {{post.created_person.last_name}}</small>
+        <p class="mb-1">{{post.text}}</p><small>{{post.created_person.first_name}} {{post.created_person.last_name}}
     </a>
-    <br>
+    <a class="btn btn-danger btn-sm" href="{% url 'dashboard_post_delete' classroom.id subject.id post.id %}">DELETE</a>
+    <br></br>
     {% endfor %}
     </div>
     <form method="POST" action="">
