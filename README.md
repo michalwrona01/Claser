@@ -1,8 +1,13 @@
 ## Table of contents
-* [Description](#Description)
+* [Description](#description)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Live demo](#application-demo)
+* [Ilustrate](#ilustrate)
+* [Features](#features)
+* [To Do](#to-do)
+* [Project Status](#project-status)
+* [Inspiration](#inspiration)
 
 # CLASER
 ## Description
