@@ -66,15 +66,20 @@ Enter your browser on this link: [127.0.0.1:8000](http://127.0.0.1:8000/)
   - Teacher
   - Director
 - Homeworks
+  - Add homework 
+  - Delete homework
 - Marks
+  - Add mark
+  - Delete mark
 - Posts
+  - Add post
+  - Delete post
 - Lesson Plan
 - Video chat
 - Attendance list
 - Messages
 
 ## To do
-- Delete marks, homeworks, posts
 - Lesson Plan
 - Video chat
 - Messages
