@@ -93,7 +93,7 @@ The project is in progress development, all changes and development can be seen 
 # Inspiration
 The current situation in the world was the inspiration for creating this application.
 
-#Contact to me
+# Contact to me
 E-mail: wronamichal01@gmail.com
 
 
