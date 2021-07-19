@@ -29,7 +29,6 @@ class Student(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
 
 
-
 class Mark(models.Model):
     MARK_NUMBER = (
         (1, '1'),
@@ -67,6 +66,9 @@ class Post(models.Model):
     classroom = models.ForeignKey(Classroom, null=True, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, null=True, on_delete=models.CASCADE)
     created_person = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
 
 
 class Homework(models.Model):

@@ -7,7 +7,6 @@ from dashboard.forms import PostCreationForm
 from django.contrib import messages
 
 
-
 @login_required(login_url='login')
 @redirect_to_choice_profile
 @redirect_to_home_page_due_to_role
@@ -18,14 +17,12 @@ def home(request):
     subjects = Subject.objects.filter(classroom__name=classroom.name)
     marks = Mark.objects.filter(students__id=student.id)
 
-
     context = {
-                'student' : student,
-                'subjects' : subjects,
-                'classroom' : classroom,
-                'marks' : marks,
-                }
-
+        'student': student,
+        'subjects': subjects,
+        'classroom': classroom,
+        'marks': marks,
+    }
 
     return render(request, 'app/home.html', context)
 
@@ -39,10 +36,10 @@ def subject_panel(request, subject_pk):
     homeworks = Homework.objects.filter(subject=subject)
 
     initial_values = {
-            'classroom' : classroom,
-            'subject' : subject,
-            'created_person' : request.user}
-    
+        'classroom': classroom,
+        'subject': subject,
+        'created_person': request.user}
+
     form_post = PostCreationForm(initial=initial_values)
 
     if request.method == "POST":
@@ -51,14 +48,15 @@ def subject_panel(request, subject_pk):
         if form_post.is_valid():
             form_post.save()
 
-    context = {'posts' : posts,
-                'subject' : subject,
-                'classroom' : classroom,
-                'homeworks' : homeworks,
-                'form_post' : form_post,
-                }
+    context = {'posts': posts,
+               'subject': subject,
+               'classroom': classroom,
+               'homeworks': homeworks,
+               'form_post': form_post,
+               }
 
     return render(request, 'app/subject_panel.html', context)
+
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['student'])
@@ -71,24 +69,6 @@ def subject_panel_post_delete(request, subject_pk, post_id):
         else:
             messages.error(request, "You can't delete this post!")
     except ObjectDoesNotExist:
-        messages.error(request, "You doesn't have any posts or want to delete an existing post!")      
+        messages.error(request, "You doesn't have any posts or want to delete an existing post!")
     finally:
         return redirect('subject_panel', subject_pk)
-
-
-    
-
-
-    
-
-
-
-
-
-
-
-    
-
-
-
-    
