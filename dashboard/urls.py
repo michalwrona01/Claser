@@ -11,5 +11,4 @@ urlpatterns = [
     path('classroom/<str:classroom_pk>/subject/<str:subject_pk>/homeworks', views.dashboard_homeworks, name="dashboard_homeworks"),
     path('classroom/<str:classroom_pk>/subject/<str:subject_pk>/homeworks/<str:homework_pk>/delete', views.dashboard_homework_delete, name="dashboard_homework_delete"),
     path('classroom/<str:classroom_pk>/subject/<str:subject_pk>/marks', views.dashboard_marks, name="dashboard_marks"),
-    path('classroom/<str:classroom_pk>/subject/<str:subject_pk>/lessonplan', views.dashboard_lessonplan, name="dashboard_lessonplan"),
 ]

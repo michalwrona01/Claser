@@ -183,20 +183,3 @@ def dashboard_marks(request, classroom_pk, subject_pk):
                 
 
     return render(request, 'dashboard/marks_dashboard.html', context)
-
-
-login_required(login_url='login')
-@allowed_user(allowed_roles=['teacher'])
-def dashboard_lessonplan(request, classroom_pk, subject_pk):
-    active_list_for_boostrap = ['', '', '', '', 'active', '']
-
-    classroom = Classroom.objects.get(id=classroom_pk)
-    subject = Subject.objects.get(id=subject_pk)
-
-    context = {
-        'active_list' : active_list_for_boostrap,
-        'classroom' : classroom,
-        'subject' : subject,
-    }
-    
-    return render(request, 'dashboard/lessonplan_dashboard.html', context)
