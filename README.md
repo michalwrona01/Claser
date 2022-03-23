@@ -28,11 +28,26 @@ The aim of the project is to create a friendly and usable design.
 [wronamichal-claser.herokuapp.com](https://wronamichal-claser.herokuapp.com/)
 
 ## On your PC
+### Windows
 ```bash
 virtualenv env
 ```
 ```bash
 source env/Scripts/activate
+```
+```bash
+pip install requirements.txt
+```
+```bash
+python manage.py runserver
+```
+Enter your browser on this link: [127.0.0.1:8000](http://127.0.0.1:8000/)
+### Linux
+```bash
+python3 -m venv env
+```
+```bash
+source env/bin/activate
 ```
 ```bash
 pip install requirements.txt
