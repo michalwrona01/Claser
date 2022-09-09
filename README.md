@@ -25,7 +25,7 @@ The aim of the project is to create a friendly and usable design.
 
 # Setup
 ## Application demo
-[wronamichal-claser.herokuapp.com](https://wronamichal-claser.herokuapp.com/)
+[wronamichal-claser.herokuapp.com](https://claser.wronamichal.pl/)
 
 ## On your PC
 ### Windows
@@ -103,7 +103,7 @@ Enter your browser on this link: [127.0.0.1:8000](http://127.0.0.1:8000/)
 # Project status
 The project is in progress development, all changes and development can be seen in the project demo.
 
-[DEMO LIVE](https://wronamichal-claser.herokuapp.com/) (In the process of migrating to new servers)
+[DEMO LIVE](https://claser.wronamichal.pl/) (In the process of migrating to new servers)
 
 # Inspiration
 The current situation in the world was the inspiration for creating this application.
