@@ -25,7 +25,7 @@ The aim of the project is to create a friendly and usable design.
 
 # Setup
 ## Application demo
-[wronamichal-claser.herokuapp.com](https://claser.wronamichal.pl/)
+[https://claser.wronamichal.pl/](https://claser.wronamichal.pl/)
 
 ## On your PC
 ### Windows
