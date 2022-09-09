@@ -1,0 +1,15 @@
+version: "3.3"
+
+services:
+  claser_web:
+    build: .
+    command: gunicorn website.wsgi:application --bind 0.0.0.0:8002
+    volumes:
+      - .:/code
+    ports:
+      - "8002:8002"
+    networks:
+      - nginx_network
+networks:
+  nginx_network:
+    external: true
